@@ -1,5 +1,5 @@
 <h2>5 GUIs Sources
-  <img src="5GUIs/Assets.xcassets/AppIcon.appiconset/5GUIs- 128.png"
+  <img src="5GUIs/Assets.xcassets/AppIcon.appiconset/5GUIs-128.png"
            align="right" width="128" height="128" />
 </h2>
 
