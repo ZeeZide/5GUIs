@@ -1,0 +1,17 @@
+xcuserdata
+.svn
+.DS_Store
+*.pyc
+*.class
+*.o
+*.shlib
+*.a
+*.xccheckout
+xcdebugger
+UserInterfaceState.xcuserstate
+User Interface State
+build
+
+Package.resolved
+.build
+
