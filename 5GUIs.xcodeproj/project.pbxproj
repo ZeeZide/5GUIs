@@ -58,6 +58,7 @@
 		E83E32C425220277009BE980 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E83E32C625220277009BE980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E83E32C725220277009BE980 /* _GUIs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = _GUIs.entitlements; sourceTree = "<group>"; };
+		E8E5B7572526299400FF9B14 /* llvm-objdump.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llvm-objdump.entitlements"; sourceTree = "<group>"; };
 		E8F1C3D82524BA3F000B517B /* llvm-objdump */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llvm-objdump"; sourceTree = "<group>"; };
 		E8F1C3F62524EAFB000B517B /* LLVM-LICENSE.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LLVM-LICENSE.TXT"; sourceTree = "<group>"; };
 		E8F1C40225260051000B517B /* OTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTool.swift; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 		E8F1C3D72524BA3F000B517B /* LLVM */ = {
 			isa = PBXGroup;
 			children = (
+				E8E5B7572526299400FF9B14 /* llvm-objdump.entitlements */,
 				E8F1C3F62524EAFB000B517B /* LLVM-LICENSE.TXT */,
 				E8F1C3D82524BA3F000B517B /* llvm-objdump */,
 			);
@@ -475,6 +477,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = 5GUIs/_GUIs.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"5GUIs/Preview Content\"";
@@ -501,6 +504,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = 5GUIs/_GUIs.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"5GUIs/Preview Content\"";
