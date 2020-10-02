@@ -37,6 +37,7 @@ struct DetailsPopover: View {
           }
         }
       }
+      .foregroundColor(Color(NSColor.textColor))
     }
   }
   
