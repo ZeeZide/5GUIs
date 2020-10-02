@@ -45,6 +45,25 @@ that would be *very* welcome!
 - LLVM objdump: [license](LLVM/LLVM-LICENSE.TXT)
 
 
+### Building the Project in Xcode
+
+Before the app can be build, an `llvm-objdump` binary needs to be put into
+the `LLVM` folder (the binary was a little big for inclusion in the repository).
+
+For testing purposes the one included in Xcode should be fine,
+it should be living over here:
+`/Applications/Xcode.app//Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump`.
+
+For deployment it is probably better to build and own one. 
+To do so:
+- grab the `LLVM source code` from the 
+  [downloads page](https://releases.llvm.org/download.html#10.0.1)
+- Unpack it somewhere, e.g.: `cd /tmp; && tar zxf llvm-10.0.1.src.tar.xz`
+- Create a build dir: `mkdir /tmp/build-dir && cd /tmp/build-dir`
+- Create the makefiles: `cmake ../llvm-10.0.1.src/`
+- Build it: `cd tools/llvm-objdump && cmake --build .`
+
+
 ### Who
 
 **5 GUIs** is brought to you by
