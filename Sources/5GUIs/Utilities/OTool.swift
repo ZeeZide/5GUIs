@@ -116,9 +116,14 @@ private func run(objdump: String, against url: URL,
 private func run(objdump: String, against url: URL) throws -> [ String ] {
   // bash escaping
   let result = Process.launch(at: objdump,
-                              with: [ "-macho", "--dylibs-used", "'\(url.path)'" ])
+                              with: [ "-macho", "--dylibs-used", url.path ],
+                              using: .none /* no shell */)
   guard result.status == 0 else {
-    print("ERROR: objdump result:", result)
+    // status is 4 on signing errors (illegal instruction)
+    // status is 127 for bash errors
+    print("ERROR: objdump result:", result,
+          "\n  path:", objdump,
+          "\n  error:\n", result.stderr)
     throw OToolError.invocationFailed(status: result.status)
   }
   
