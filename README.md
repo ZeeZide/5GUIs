@@ -58,7 +58,8 @@ has the time to add some fancy animations,
 better colors, iconography and styling, 
 that would be *very* welcome!
 
-Also checkout the Issues page of this repository. It'll have some.
+Also checkout the [Issues](/ZeeZide/5GUIs/issues) page of this repository. 
+It'll have some.
 
 
 ### 3rd Party Software Used
