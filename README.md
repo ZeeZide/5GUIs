@@ -10,13 +10,17 @@
 GUI is an abbreviation for [Graphical User Interface](https://en.wikipedia.org/wiki/Graphical_user_interface).
 
 <a href="https://apps.apple.com/us/app/id1534164621">
-  <img src="/img/apple/Download_on_the_App_Store_Badge_US-UK_135x40 Canvas.png"> 
+  <img src="https://zeezide.com/img/apple/Download_on_the_App_Store_Badge_US-UK_135x40 Canvas.png"> 
 </a>  
 
-![](https://zeezide.com/img/5guis/screenshots/appwindow/5guis-drop-it.png)
-![](https://zeezide.com/img/5guis/screenshots/appwindow/5guis-marzipan.png)
-![](https://zeezide.com/img/5guis/screenshots/appwindow/5guis-companion.png)
-![](https://zeezide.com/img/5guis/screenshots/appwindow/5guis-automator.png)
+<img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-drop-it.png"
+     width="30%" />
+<img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-marzipan.png"
+     width="30%" />
+<img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-companion.png"
+     width="30%" />
+<img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-automator.png"
+     width="30%" />
 
 
 ### How it works
