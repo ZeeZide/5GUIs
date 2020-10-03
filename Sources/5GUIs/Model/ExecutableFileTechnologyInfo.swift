@@ -30,6 +30,7 @@ struct ExecutableFileTechnologyInfo: Equatable {
     static let swiftui   = DetectedTechnologies(rawValue: 1 << 3)
     static let uikit     = DetectedTechnologies(rawValue: 1 << 4)
     static let appkit    = DetectedTechnologies(rawValue: 1 << 5)
+    static let qt        = DetectedTechnologies(rawValue: 1 << 6)
 
     static let objc      = DetectedTechnologies(rawValue: 1 << 10)
     static let swift     = DetectedTechnologies(rawValue: 1 << 11)
@@ -57,6 +58,7 @@ extension ExecutableFileTechnologyInfo.DetectedTechnologies {
       if check(.appkit,    "AppKit.framework")  { continue }
       if check(.swiftui,   "SwiftUI.framework") { continue }
       if check(.uikit,     "UIKit.framework")   { continue }
+      if check(.qt,        "QtCore.framework")  { continue }
       
       if check(.cplusplus, "libc++")            { continue }
       if check(.objc,      "libobjc")           { continue }

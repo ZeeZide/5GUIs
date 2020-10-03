@@ -59,6 +59,9 @@ fileprivate struct Texts {
   
   static let java =
     "Java. An actual app built using Java. Charles, is this you?"
+
+  static let qt =
+    "Qt. Anything can happen. Run."
 }
 
 fileprivate extension ExecutableFileTechnologyInfo {
@@ -92,6 +95,10 @@ fileprivate extension ExecutableFileTechnologyInfo {
 
     if features(.swiftui) {
       return Texts.swiftui
+    }
+    
+    if features(.qt) {
+        return Texts.qt
     }
     
     if features(.appkit) {
