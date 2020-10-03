@@ -14,13 +14,13 @@ GUI is an abbreviation for [Graphical User Interface](https://en.wikipedia.org/w
 </a>  
 
 <img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-drop-it.png"
-     width="30%" />
+     width="24%" />
 <img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-marzipan.png"
-     width="30%" />
+     width="24%" />
 <img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-companion.png"
-     width="30%" />
+     width="24%" />
 <img src="https://zeezide.com/img/5guis/screenshots/appwindow/5guis-automator.png"
-     width="30%" />
+     width="24%" />
 
 
 ### How it works
