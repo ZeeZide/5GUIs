@@ -23,6 +23,8 @@ struct InfoDict: Equatable {
   // Whether the app supports AS, not an AS app.
   let appleScriptEnabled   : Bool
   
+  let isAutomatorApplet    : Bool
+  
   /**
    * E.g. JD-GUI.
    *
@@ -71,6 +73,7 @@ struct InfoDict: Equatable {
     executable           = S("CFBundleExecutable")
 
     appleScriptEnabled   = B("NSAppleScriptEnabled")
+    isAutomatorApplet    = B("AMIsApplet")
     
     supportedPlatforms = dictionary["CFBundleSupportedPlatforms"] as? [ String ]
                       ?? []

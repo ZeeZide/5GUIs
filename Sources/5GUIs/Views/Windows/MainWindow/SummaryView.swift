@@ -72,6 +72,10 @@ fileprivate struct Texts {
     "🐍 wxWidgets, very cross platformy!"
   static let wxWidgets =
     "wxWidgets. Is it Python, Perl or Ruby? Maybe straight C++? 🙈"
+  
+  static let automatorApp =
+    "An Automator.app. " +
+    "We've finally found someone using that great technology!"
 }
 
 fileprivate extension ExecutableFileTechnologyInfo {
@@ -89,6 +93,10 @@ fileprivate extension ExecutableFileTechnologyInfo {
       if features(.catalyst) { return Texts.electronAndCatalyst }
       if features(.swift)    { return Texts.electronAndSwiftUI  }
       return Texts.electron
+    }
+    
+    if (infoDictionary?.isAutomatorApplet ?? false) {
+      return Texts.automatorApp
     }
     
     if features(.catalyst) {
