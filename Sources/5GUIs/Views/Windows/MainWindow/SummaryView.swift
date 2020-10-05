@@ -62,6 +62,9 @@ fileprivate struct Texts {
 
   static let qt =
     "Qt. Anything can happen. Run."
+
+  static let wxWidgets =
+    "wxWidgets. Anything can happen. Run."
 }
 
 fileprivate extension ExecutableFileTechnologyInfo {
@@ -99,6 +102,10 @@ fileprivate extension ExecutableFileTechnologyInfo {
     
     if features(.qt) {
         return Texts.qt
+    }
+
+    if features(.wxWidgets) {
+        return Texts.wxWidgets
     }
     
     if features(.appkit) {
