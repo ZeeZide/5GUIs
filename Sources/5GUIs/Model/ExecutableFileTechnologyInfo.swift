@@ -34,4 +34,12 @@ extension ExecutableFileTechnologyInfo {
       ?? executableURL?.lastPathComponent
       ?? "???"
   }
+  
+  var embeddedTechnologies : DetectedTechnologies {
+    var techs = DetectedTechnologies()
+    for info in embeddedExecutables {
+      techs.formUnion(info.detectedTechnologies)
+    }
+    return techs
+  }
 }

@@ -71,16 +71,19 @@ extension ExecutableFileTechnologyInfo {
   
   /// Our "5 GUIs"
   var analysisResults : [ FakeStep ] {
+    let allTechnologies =
+      self.detectedTechnologies.union(self.embeddedTechnologies)
+
     func make(_ feature : DetectedTechnologies, _ config  : FakeStepConfig)
          -> FakeStep
     {
-      .init(config: config, state: detectedTechnologies.contains(feature))
+      .init(config: config, state: allTechnologies.contains(feature))
     }
     
     // This doesn't work on macOS BS:
     // https://github.com/ZeeZide/5GUIs/issues/3
-    let isPhone = detectedTechnologies.contains(.uikit)
-             && !(detectedTechnologies.contains(.catalyst))
+    let isPhone = allTechnologies.contains(.uikit)
+             && !(allTechnologies.contains(.catalyst))
     
     return [
       make(.electron, .electron),

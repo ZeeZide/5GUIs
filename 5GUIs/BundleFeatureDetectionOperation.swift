@@ -41,20 +41,27 @@ final class BundleFeatureDetectionOperation: ObservableObject {
 
   @Published var state = State.processing {
     didSet {
+      assert(_dispatchPreconditionTest(.onQueue(.main)))
       delegate?.detectionStateDidChange(self)
     }
   }
   @Published var info : ExecutableFileTechnologyInfo {
+    // Careful w/ accessing this within the operation, you can't!!! Threads.
     didSet {
+      assert(_dispatchPreconditionTest(.onQueue(.main)))
       delegate?.detectionStateDidChange(self)
     }
   }
   @Published var otoolAvailable = true
 
-  var url : URL { info.fileURL }
+  let url : URL
   
-  init(_ url: URL) {
-    self.info = ExecutableFileTechnologyInfo(fileURL: url)
+  private let nesting : Int
+  
+  init(_ url: URL, nesting: Int = 1) {
+    self.url     = url
+    self.info    = ExecutableFileTechnologyInfo(fileURL: url)
+    self.nesting = nesting
   }
   func resume() {
     DispatchQueue.global().async {
@@ -151,9 +158,10 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     
     processDirectoryContents(url)
     
-    
-    // TODO: look for nested binaries (additional apps).
-    
+    if nesting < 2 {
+      processNestedApplications(ownExecutable: info.executable
+                                            ?? executableURL.lastPathComponent)
+    }
 
     // DONE
     self.applyState(.finished)
@@ -161,6 +169,34 @@ final class BundleFeatureDetectionOperation: ObservableObject {
   
   
   // MARK: - Individual Workers
+
+  private func processNestedApplications(ownExecutable: String) {
+    let contents = url.appendingPathComponent("Contents")
+    
+    func scan(_ directory: URL) {
+      let apps = fm.ls(directory, suffix: ".app").lazy
+        .filter { $0 != ownExecutable }
+        .map    { directory.appendingPathComponent($0) }
+      for app in apps {
+        // We could actually async-nest the operations, but all things are
+        // currently synchronous anyways.
+        let op = BundleFeatureDetectionOperation(app, nesting: nesting + 1)
+        op.startWork() // same thread (vs resume), no delegate
+
+        if op.info.executableURL  != nil &&
+           op.info.infoDictionary != nil &&
+           !op.info.detectedTechnologies.isEmpty
+        {
+          apply {
+            self.info.embeddedExecutables.append(op.info)
+          }
+        }
+      }
+    }
+    
+    scan(contents.appendingPathComponent("MacOS"))
+    scan(contents.appendingPathComponent("Frameworks"))
+  }
   
   /// This runs objdump on the executable (w/ traversal of dependencies)
   private func processExecutable(_ executableURL: URL) { // Q: Any

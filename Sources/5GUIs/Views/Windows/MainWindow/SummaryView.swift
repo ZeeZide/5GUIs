@@ -61,7 +61,7 @@ fileprivate struct Texts {
     "Java. An actual app built using Java. Charles, is this you?"
   
   static let python =
-    "A Pythonic app, very snaky! Hope all indents are right."
+    "A Pythonic app, very snakey 🐍! Hope all indents are right."
 
   static let qtPython =
     "This Qt 🐍 is going to signal something."
@@ -89,16 +89,19 @@ import Foundation
 
 fileprivate extension ExecutableFileTechnologyInfo {
   
-  func features(_ feature: DetectedTechnologies) -> Bool {
-    detectedTechnologies.contains(feature)
-  }
-
   var summaryText : String {
     summaryTextTemplate.replacingOccurrences(of: "#APPNAME#", with: appName)
   }
 
   private var summaryTextTemplate : String {
-    if detectedTechnologies.isEmpty { return Texts.none }
+    let allTechnologies =
+      self.detectedTechnologies.union(self.embeddedTechnologies)
+    
+    func features(_ feature: DetectedTechnologies) -> Bool {
+      allTechnologies.contains(feature)
+    }
+
+    if allTechnologies.isEmpty { return Texts.none }
     
     if features(.electron) {
       if features(.catalyst) { return Texts.electronAndCatalyst }
