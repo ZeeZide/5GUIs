@@ -211,19 +211,13 @@ final class BundleFeatureDetectionOperation: ObservableObject {
       }
     }
     
-    // Check for AppleScript applications
+    // Check for AppleScript scripts contained (app or not)
     do {
       let suburl = contents.appendingPathComponent("Resources/Scripts")
-      let hasScript =
-        try fm.contentsOfDirectory(at: suburl,
-                                   includingPropertiesForKeys: nil,
-                                   options: .skipsSubdirectoryDescendants)
-          .contains { $0.pathExtension == "scpt" }
-      if hasScript {
+      if !fm.ls(suburl, suffix: ".scpt").isEmpty {
         detectedFeatures.insert(.applescript)
       }
     }
-    catch {} // not here
     
     // scan for Platypus
     do {
@@ -240,13 +234,7 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     // scan the Frameworks directory
     do {
       let suburl = contents.appendingPathComponent("Frameworks")
-      let files  =
-        try fm.contentsOfDirectory(at: suburl, includingPropertiesForKeys: nil,
-                                   options: .skipsSubdirectoryDescendants)
-          .map { $0.lastPathComponent }
-          .sorted()
-
-      for filename in files {
+      for filename in fm.ls(suburl) {
         if filename.hasPrefix("libwx_") {
           detectedFeatures.insert(.wxWidgets)
         }
@@ -255,13 +243,24 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         }
       }
     }
-    catch {} // doesn't have to exist
     
     if !detectedFeatures.isEmpty {
       apply {
         self.info.detectedTechnologies.formUnion(detectedFeatures)
       }
     }
+  }
+}
+
+fileprivate extension FileManager {
+
+  func ls(_ url: URL, suffix: String = "") -> [ String ] {
+    (try? contentsOfDirectory(at: url, includingPropertiesForKeys: nil,
+                              options: .skipsSubdirectoryDescendants)
+      .map    { $0.lastPathComponent }
+      .filter { $0.hasSuffix(suffix) }
+      .sorted()
+    ) ?? []
   }
 }
 
