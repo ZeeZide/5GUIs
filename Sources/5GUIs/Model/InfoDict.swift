@@ -17,6 +17,7 @@ struct InfoDict: Equatable {
   let supportedPlatforms   : [ String ] // MacOSX
   let minimumSystemVersion : String?
   let appleScriptEnabled   : Bool
+  let JavaX                : Bool // e.g. JD-GUI
   
   let iconName   : String? // AppIcon
   let iconFile   : String? // AppIcon
@@ -61,5 +62,6 @@ struct InfoDict: Equatable {
     
     supportedPlatforms = dictionary["CFBundleSupportedPlatforms"] as? [ String ]
                       ?? []
+    JavaX = dictionary["JavaX"] != nil
   }
 }
