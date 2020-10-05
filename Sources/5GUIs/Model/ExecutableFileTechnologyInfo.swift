@@ -31,6 +31,7 @@ struct ExecutableFileTechnologyInfo: Equatable {
     static let uikit     = DetectedTechnologies(rawValue: 1 << 4)
     static let appkit    = DetectedTechnologies(rawValue: 1 << 5)
     static let qt        = DetectedTechnologies(rawValue: 1 << 6)
+    static let wxWidgets = DetectedTechnologies(rawValue: 1 << 7)
 
     static let objc      = DetectedTechnologies(rawValue: 1 << 10)
     static let swift     = DetectedTechnologies(rawValue: 1 << 11)

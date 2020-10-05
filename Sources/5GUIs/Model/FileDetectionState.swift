@@ -187,6 +187,21 @@ final class FileDetectionState: ObservableObject {
         detectedFeatures.insert(.electron)
       }
     }
+
+    // scan the Frameworks directory
+    do {
+      let suburl = contents.appendingPathComponent("Frameworks")
+      let content = try fm.contentsOfDirectory(at: suburl, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants)
+      for url in content {
+        let filename = url.lastPathComponent
+        if filename.hasPrefix("libwx_") {
+            detectedFeatures.insert(.wxWidgets)
+        }
+      }
+    }
+    catch {
+      print("ERROR: ignoring nested error:", error)
+    }
     
     if !detectedFeatures.isEmpty {
       apply {
