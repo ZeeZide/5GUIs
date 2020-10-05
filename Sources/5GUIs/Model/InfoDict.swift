@@ -16,7 +16,10 @@ struct InfoDict: Equatable {
   let applicationCategory  : String?
   let supportedPlatforms   : [ String ] // MacOSX
   let minimumSystemVersion : String?
+  
+  // Whether the app supports AS, not an AS app.
   let appleScriptEnabled   : Bool
+  
   let JavaX                : Bool // e.g. JD-GUI
   
   let iconName   : String? // AppIcon

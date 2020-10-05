@@ -194,17 +194,22 @@ final class FileDetectionState: ObservableObject {
 
     // scan the Frameworks directory
     do {
-      let suburl = contents.appendingPathComponent("Frameworks")
-      let content = try fm.contentsOfDirectory(at: suburl, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants)
-      for url in content {
-        let filename = url.lastPathComponent
+      let suburl  = contents.appendingPathComponent("Frameworks")
+      let files =
+        try fm.contentsOfDirectory(at: suburl, includingPropertiesForKeys: nil,
+                                   options: .skipsSubdirectoryDescendants)
+          .map { $0.lastPathComponent }
+          .sorted()
+
+      for filename in files {
         if filename.hasPrefix("libwx_") {
-            detectedFeatures.insert(.wxWidgets)
+          detectedFeatures.insert(.wxWidgets)
+          break
         }
       }
     }
     catch {
-      print("ERROR: ignoring nested error:", error)
+      print("ERROR: ignoring framework scan error:", error)
     }
     
     if !detectedFeatures.isEmpty {
