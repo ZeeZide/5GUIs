@@ -36,6 +36,7 @@ struct ExecutableFileTechnologyInfo: Equatable {
     static let objc      = DetectedTechnologies(rawValue: 1 << 10)
     static let swift     = DetectedTechnologies(rawValue: 1 << 11)
     static let cplusplus = DetectedTechnologies(rawValue: 1 << 12)
+    static let python    = DetectedTechnologies(rawValue: 1 << 13)
     static let java      = DetectedTechnologies(rawValue: 1 << 14)
   }
   var detectedTechnologies : DetectedTechnologies = []

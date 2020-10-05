@@ -59,12 +59,19 @@ fileprivate struct Texts {
   
   static let java =
     "Java. An actual app built using Java. Charles, is this you?"
+  
+  static let python =
+    "A Pythonic app, very snaky! Hope all indents are right."
 
+  static let qtPython =
+    "This Qt 🐍 is going to signal something."
   static let qt =
     "Qt. Anything can happen. Run."
 
+  static let wxWidgetsPython =
+    "🐍 wxWidgets, very cross platformy!"
   static let wxWidgets =
-    "wxWidgets. Anything can happen. Run."
+    "wxWidgets. Is it Python, Perl or Ruby? Maybe straight C++? 🙈"
 }
 
 fileprivate extension ExecutableFileTechnologyInfo {
@@ -101,11 +108,17 @@ fileprivate extension ExecutableFileTechnologyInfo {
     }
     
     if features(.qt) {
-        return Texts.qt
+      if features(.python) { return Texts.qtPython }
+      return Texts.qt
     }
 
     if features(.wxWidgets) {
-        return Texts.wxWidgets
+      if features(.python) { return Texts.wxWidgetsPython }
+      return Texts.wxWidgets
+    }
+    
+    if features(.python) {
+      return Texts.python
     }
     
     if features(.appkit) {

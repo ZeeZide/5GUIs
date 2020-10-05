@@ -204,7 +204,9 @@ final class FileDetectionState: ObservableObject {
       for filename in files {
         if filename.hasPrefix("libwx_") {
           detectedFeatures.insert(.wxWidgets)
-          break
+        }
+        else if filename == "python-extensions" {
+          detectedFeatures.insert(.python)
         }
       }
     }
