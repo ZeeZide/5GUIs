@@ -194,8 +194,8 @@ final class FileDetectionState: ObservableObject {
 
     // scan the Frameworks directory
     do {
-      let suburl  = contents.appendingPathComponent("Frameworks")
-      let files =
+      let suburl = contents.appendingPathComponent("Frameworks")
+      let files  =
         try fm.contentsOfDirectory(at: suburl, includingPropertiesForKeys: nil,
                                    options: .skipsSubdirectoryDescendants)
           .map { $0.lastPathComponent }
