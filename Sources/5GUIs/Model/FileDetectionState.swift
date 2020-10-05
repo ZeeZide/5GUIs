@@ -231,6 +231,8 @@ final class FileDetectionState: ObservableObject {
       .init(config: config, state: info.detectedTechnologies.contains(feature))
     }
     
+    // This doesn't work on macOS BS:
+    // https://github.com/ZeeZide/5GUIs/issues/3
     let isPhone = info.detectedTechnologies.contains(.uikit)
              && !(info.detectedTechnologies.contains(.catalyst))
     
