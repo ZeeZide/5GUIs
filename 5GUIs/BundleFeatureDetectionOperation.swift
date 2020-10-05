@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol FileDetectionStateDelegate: AnyObject {
+protocol BundleFeatureDetectionOperationDelegate: AnyObject {
   func detectionStateDidChange(_ state: BundleFeatureDetectionOperation)
 }
 
@@ -16,10 +16,10 @@ protocol FileDetectionStateDelegate: AnyObject {
  * collects all the info we want.
  */
 final class BundleFeatureDetectionOperation: ObservableObject {
-  // FIXME: this is more like a 'load operation'
-  // TBD: if this goes away, we could keep a global URL => State mapping
+  // FIXME: this is more like a 'load operation'. But we can't use plain
+  //        Operation, because we are async (would need to do that boilerplate).
   
-  weak var delegate : FileDetectionStateDelegate?
+  weak var delegate : BundleFeatureDetectionOperationDelegate?
     
   enum State: Equatable {
     case processing

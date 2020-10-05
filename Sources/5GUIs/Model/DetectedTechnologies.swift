@@ -24,29 +24,3 @@ struct DetectedTechnologies: OptionSet {
 
   static let carbon    = DetectedTechnologies(rawValue: 1 << 42)
 }
-
-extension DetectedTechnologies {
-  
-  mutating func scanDependencies(_ dependencies: [ String ]) {
-    for dep in dependencies {
-      func check(_ option: DetectedTechnologies, _ needle: String) -> Bool
-      {
-        guard !contains(option)    else { return false } // scanned already
-        guard dep.contains(needle) else { return false }
-        self.insert(option)
-        return true
-      }
-      
-      if check(.electron,  "Electron")          { continue }
-      if check(.catalyst,  "UIKitMacHelper")    { continue }
-      if check(.appkit,    "AppKit.framework")  { continue }
-      if check(.swiftui,   "SwiftUI.framework") { continue }
-      if check(.uikit,     "UIKit.framework")   { continue }
-      if check(.qt,        "QtCore.framework")  { continue }
-      
-      if check(.cplusplus, "libc++")            { continue }
-      if check(.objc,      "libobjc")           { continue }
-      if check(.swift,     "libswiftCore")      { continue }
-    }
-  }
-}

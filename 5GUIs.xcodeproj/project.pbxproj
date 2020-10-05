@@ -27,7 +27,7 @@
 		E8F1C42825260051000B517B /* DetailsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C40F25260051000B517B /* DetailsPopover.swift */; };
 		E8F1C42925260051000B517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C41025260051000B517B /* ContentView.swift */; };
 		E8F1C42A25260051000B517B /* MainFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C41125260051000B517B /* MainFileView.swift */; };
-		E8F1C42B25260051000B517B /* FileDetectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C41325260051000B517B /* FileDetectionState.swift */; };
+		E8F1C42B25260051000B517B /* BundleFeatureDetectionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C41325260051000B517B /* BundleFeatureDetectionOperation.swift */; };
 		E8F1C42C25260051000B517B /* InfoDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C41425260051000B517B /* InfoDict.swift */; };
 		E8F1C42D25260051000B517B /* FakeDetectionStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C41525260051000B517B /* FakeDetectionStepper.swift */; };
 		E8F1C42E25260051000B517B /* FakeStepConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C41625260051000B517B /* FakeStepConfigs.swift */; };
@@ -64,7 +64,7 @@
 		E8F1C40F25260051000B517B /* DetailsPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPopover.swift; sourceTree = "<group>"; };
 		E8F1C41025260051000B517B /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E8F1C41125260051000B517B /* MainFileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFileView.swift; sourceTree = "<group>"; };
-		E8F1C41325260051000B517B /* FileDetectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDetectionState.swift; sourceTree = "<group>"; };
+		E8F1C41325260051000B517B /* BundleFeatureDetectionOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleFeatureDetectionOperation.swift; sourceTree = "<group>"; };
 		E8F1C41425260051000B517B /* InfoDict.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoDict.swift; sourceTree = "<group>"; };
 		E8F1C41525260051000B517B /* FakeDetectionStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeDetectionStepper.swift; sourceTree = "<group>"; };
 		E8F1C41625260051000B517B /* FakeStepConfigs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeStepConfigs.swift; sourceTree = "<group>"; };
@@ -113,6 +113,7 @@
 				E8F1C41B25260051000B517B /* Style.swift */,
 				E8F1C41A25260051000B517B /* WindowState.swift */,
 				E8F1C41925260051000B517B /* Windows.swift */,
+				E8F1C41325260051000B517B /* BundleFeatureDetectionOperation.swift */,
 				E8F1C41225260051000B517B /* Model */,
 				E8F1C40725260051000B517B /* Views */,
 				E8F1C40125260051000B517B /* Utilities */,
@@ -174,7 +175,6 @@
 				E88C60C5252B482B008B3272 /* DetectedTechnologies.swift */,
 				E8F1C41825260051000B517B /* ExecutableFileTechnologyInfo.swift */,
 				E8F1C41425260051000B517B /* InfoDict.swift */,
-				E8F1C41325260051000B517B /* FileDetectionState.swift */,
 				E8F1C41525260051000B517B /* FakeDetectionStepper.swift */,
 				E8F1C41625260051000B517B /* FakeStepConfigs.swift */,
 				E8F1C41725260051000B517B /* LoadBundleImage.swift */,
@@ -336,7 +336,7 @@
 				E8F1C42C25260051000B517B /* InfoDict.swift in Sources */,
 				E8F1C43325260051000B517B /* Style.swift in Sources */,
 				E8F1C42F25260051000B517B /* LoadBundleImage.swift in Sources */,
-				E8F1C42B25260051000B517B /* FileDetectionState.swift in Sources */,
+				E8F1C42B25260051000B517B /* BundleFeatureDetectionOperation.swift in Sources */,
 				E8F1C42825260051000B517B /* DetailsPopover.swift in Sources */,
 				E8F1C42725260051000B517B /* InfoPanel.swift in Sources */,
 				E8F1C41E25260051000B517B /* URLItems.swift in Sources */,
