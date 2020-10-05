@@ -66,3 +66,31 @@ struct FakeStepConfig : Equatable, Identifiable {
     .electron, .catalyst, .swiftUI, .phone, .appKit
   ]
 }
+
+extension ExecutableFileTechnologyInfo {
+  
+  /// Our "5 GUIs"
+  var analysisResults : [ FakeStep ] {
+    let allTechnologies =
+      self.detectedTechnologies.union(self.embeddedTechnologies)
+
+    func make(_ feature : DetectedTechnologies, _ config  : FakeStepConfig)
+         -> FakeStep
+    {
+      .init(config: config, state: allTechnologies.contains(feature))
+    }
+    
+    // This doesn't work on macOS BS:
+    // https://github.com/ZeeZide/5GUIs/issues/3
+    let isPhone = allTechnologies.contains(.uikit)
+             && !(allTechnologies.contains(.catalyst))
+    
+    return [
+      make(.electron, .electron),
+      make(.catalyst, .catalyst),
+      make(.swiftui,  .swiftUI),
+      .init(config: .phone, state: isPhone),
+      make(.appkit, .appKit) // TBD: only report if others don't match?
+    ]
+  }
+}

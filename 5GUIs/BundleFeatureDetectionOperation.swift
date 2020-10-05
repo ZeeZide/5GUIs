@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol FileDetectionStateDelegate: AnyObject {
+protocol BundleFeatureDetectionOperationDelegate: AnyObject {
   func detectionStateDidChange(_ state: BundleFeatureDetectionOperation)
 }
 
@@ -16,10 +16,10 @@ protocol FileDetectionStateDelegate: AnyObject {
  * collects all the info we want.
  */
 final class BundleFeatureDetectionOperation: ObservableObject {
-  // FIXME: this is more like a 'load operation'
-  // TBD: if this goes away, we could keep a global URL => State mapping
+  // FIXME: this is more like a 'load operation'. But we can't use plain
+  //        Operation, because we are async (would need to do that boilerplate).
   
-  weak var delegate : FileDetectionStateDelegate?
+  weak var delegate : BundleFeatureDetectionOperationDelegate?
     
   enum State: Equatable {
     case processing
@@ -41,20 +41,27 @@ final class BundleFeatureDetectionOperation: ObservableObject {
 
   @Published var state = State.processing {
     didSet {
+      assert(_dispatchPreconditionTest(.onQueue(.main)))
       delegate?.detectionStateDidChange(self)
     }
   }
   @Published var info : ExecutableFileTechnologyInfo {
+    // Careful w/ accessing this within the operation, you can't!!! Threads.
     didSet {
+      assert(_dispatchPreconditionTest(.onQueue(.main)))
       delegate?.detectionStateDidChange(self)
     }
   }
   @Published var otoolAvailable = true
 
-  var url : URL { info.fileURL }
+  let url : URL
   
-  init(_ url: URL) {
-    self.info = ExecutableFileTechnologyInfo(fileURL: url)
+  private let nesting : Int
+  
+  init(_ url: URL, nesting: Int = 1) {
+    self.url     = url
+    self.info    = ExecutableFileTechnologyInfo(fileURL: url)
+    self.nesting = nesting
   }
   func resume() {
     DispatchQueue.global().async {
@@ -115,6 +122,15 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     applyState(.finished)
   }
   
+  /**
+   * Processes an app bundle (on a background queue).
+   *
+   * Steps
+   * 1. load and parse info dictionary
+   * 2. load image
+   * 3. run otool on the main executable and its dependencies
+   * 4. look for files in the bundle hierarchy
+   */
   private func processWrapper(_ url: URL) { // Q: Any
     guard let bundle = Bundle(url: url) else {
       print("could not open bundle:", url)
@@ -141,13 +157,48 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     processExecutable(executableURL)
     
     processDirectoryContents(url)
+    
+    if nesting < 2 {
+      processNestedApplications(ownExecutable: info.executable
+                                            ?? executableURL.lastPathComponent)
+    }
 
+    // DONE
     self.applyState(.finished)
   }
   
   
   // MARK: - Individual Workers
+
+  private func processNestedApplications(ownExecutable: String) {
+    let contents = url.appendingPathComponent("Contents")
+    
+    func scan(_ directory: URL) {
+      let apps = fm.ls(directory, suffix: ".app").lazy
+        .filter { $0 != ownExecutable }
+        .map    { directory.appendingPathComponent($0) }
+      for app in apps {
+        // We could actually async-nest the operations, but all things are
+        // currently synchronous anyways.
+        let op = BundleFeatureDetectionOperation(app, nesting: nesting + 1)
+        op.startWork() // same thread (vs resume), no delegate
+
+        if op.info.executableURL  != nil &&
+           op.info.infoDictionary != nil &&
+           !op.info.detectedTechnologies.isEmpty
+        {
+          apply {
+            self.info.embeddedExecutables.append(op.info)
+          }
+        }
+      }
+    }
+    
+    scan(contents.appendingPathComponent("MacOS"))
+    scan(contents.appendingPathComponent("Frameworks"))
+  }
   
+  /// This runs objdump on the executable (w/ traversal of dependencies)
   private func processExecutable(_ executableURL: URL) { // Q: Any
     do {
       let dependencies = try otool(executableURL)
@@ -168,6 +219,7 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     }
   }
   
+  /// Looks at the directory hierarchy of the bundle
   private func processDirectoryContents(_ url: URL) { // Q: Any
     var detectedFeatures = DetectedTechnologies()
     let contents = url.appendingPathComponent("Contents")
@@ -180,9 +232,12 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         break
       }
     }
+    
     // JD-GUI
-    if self.info.infoDictionary?.JavaX ?? false {
-      detectedFeatures.insert(.java)
+    do {
+      if info.infoDictionary?.JavaX ?? false {
+        detectedFeatures.insert(.java)
+      }
     }
     
     do { // Electron apps seem to have this ...
@@ -191,17 +246,31 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         detectedFeatures.insert(.electron)
       }
     }
+    
+    // Check for AppleScript scripts contained (app or not)
+    do {
+      let suburl = contents.appendingPathComponent("Resources/Scripts")
+      if !fm.ls(suburl, suffix: ".scpt").isEmpty {
+        detectedFeatures.insert(.applescript)
+      }
+    }
+    
+    // scan for Platypus
+    do {
+      let suburl1 =
+            contents.appendingPathComponent("Resources/AppSettings.plist")
+      let suburl2 = contents.appendingPathComponent("Resources/script")
+      if fm.fileExists(atPath: suburl1.path) &&
+         fm.fileExists(atPath: suburl2.path)
+      {
+        detectedFeatures.insert(.platypus)
+      }
+    }
 
     // scan the Frameworks directory
     do {
       let suburl = contents.appendingPathComponent("Frameworks")
-      let files  =
-        try fm.contentsOfDirectory(at: suburl, includingPropertiesForKeys: nil,
-                                   options: .skipsSubdirectoryDescendants)
-          .map { $0.lastPathComponent }
-          .sorted()
-
-      for filename in files {
+      for filename in fm.ls(suburl) {
         if filename.hasPrefix("libwx_") {
           detectedFeatures.insert(.wxWidgets)
         }
@@ -210,9 +279,6 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         }
       }
     }
-    catch {
-      print("ERROR: ignoring framework scan error:", error)
-    }
     
     if !detectedFeatures.isEmpty {
       apply {
@@ -220,29 +286,17 @@ final class BundleFeatureDetectionOperation: ObservableObject {
       }
     }
   }
-  
-  // MARK: - Results
-  
-  // Our "5 GUIs"
-  var analysisResults : [ FakeStep ] {
-    func make(_ feature : DetectedTechnologies, _ config  : FakeStepConfig)
-         -> FakeStep
-    {
-      .init(config: config, state: info.detectedTechnologies.contains(feature))
-    }
-    
-    // This doesn't work on macOS BS:
-    // https://github.com/ZeeZide/5GUIs/issues/3
-    let isPhone = info.detectedTechnologies.contains(.uikit)
-             && !(info.detectedTechnologies.contains(.catalyst))
-    
-    return [
-      make(.electron, .electron),
-      make(.catalyst, .catalyst),
-      make(.swiftui,  .swiftUI),
-      .init(config: .phone, state: isPhone),
-      make(.appkit, .appKit) // TBD: only report if others don't match?
-    ]
+}
+
+fileprivate extension FileManager {
+
+  func ls(_ url: URL, suffix: String = "") -> [ String ] {
+    (try? contentsOfDirectory(at: url, includingPropertiesForKeys: nil,
+                              options: .skipsSubdirectoryDescendants)
+      .map    { $0.lastPathComponent }
+      .filter { $0.hasSuffix(suffix) }
+      .sorted()
+    ) ?? []
   }
 }
 
@@ -264,7 +318,8 @@ extension DetectedTechnologies {
       if check(.swiftui,   "SwiftUI.framework") { continue }
       if check(.uikit,     "UIKit.framework")   { continue }
       if check(.qt,        "QtCore.framework")  { continue }
-      
+      if check(.webkit,    "WebKit.framework")  { continue }
+
       if check(.cplusplus, "libc++")            { continue }
       if check(.objc,      "libobjc")           { continue }
       if check(.swift,     "libswiftCore")      { continue }

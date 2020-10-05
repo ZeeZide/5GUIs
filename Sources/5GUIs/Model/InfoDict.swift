@@ -5,6 +5,9 @@
 //  Created by Helge Heß on 28.09.20.
 //
 
+/**
+ * The parsed contents of the Info.plist within an application bundle.
+ */
 struct InfoDict: Equatable {
   
   let id                   : String? // com.apple.Safari
@@ -16,7 +19,21 @@ struct InfoDict: Equatable {
   let applicationCategory  : String?
   let supportedPlatforms   : [ String ] // MacOSX
   let minimumSystemVersion : String?
+  
+  // Whether the app supports AS, not an AS app.
   let appleScriptEnabled   : Bool
+  
+  let isAutomatorApplet    : Bool
+  let requiresCarbon       : Bool
+  
+  /**
+   * E.g. JD-GUI.
+   *
+   * The value is a dict with more info:
+   * - MainClass, JVMVersion (e.g. 1.8+), ClassPath, WorkingDirectory,
+   * - Properties (another dict), VMOptions (e.g -Xms512m)
+   */
+  let JavaX                : Bool // e.g. JD-GUI
   
   let iconName   : String? // AppIcon
   let iconFile   : String? // AppIcon
@@ -35,10 +52,9 @@ struct InfoDict: Equatable {
     func B(_ key: String) -> Bool {
       guard let v = dictionary[key] else { return false }
       if let b = v as? Bool { return b }
-      if let i = v as? Int { return i != 0 }
+      if let i = v as? Int  { return i != 0 }
       if let s = (v as? String)?.lowercased() {
-        if s == "no" || s == "false" { return false }
-        return !s.isEmpty
+        return (s == "no" || s == "false") ? false : !s.isEmpty
       }
       return false
     }
@@ -58,8 +74,12 @@ struct InfoDict: Equatable {
     executable           = S("CFBundleExecutable")
 
     appleScriptEnabled   = B("NSAppleScriptEnabled")
+    isAutomatorApplet    = B("AMIsApplet")
+    requiresCarbon       = B("LSRequiresCarbon")
     
     supportedPlatforms = dictionary["CFBundleSupportedPlatforms"] as? [ String ]
                       ?? []
+    
+    JavaX = dictionary["JavaX"] != nil
   }
 }

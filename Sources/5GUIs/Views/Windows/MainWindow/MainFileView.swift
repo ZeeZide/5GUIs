@@ -10,7 +10,7 @@ import SwiftUI
 struct MainFileView: View {
   
   @ObservedObject var stepper : FakeDetectionStepper
-  @ObservedObject var state   : FileDetectionState
+  @ObservedObject var state   : BundleFeatureDetectionOperation
   
   @State private var detailsVisible = false
   

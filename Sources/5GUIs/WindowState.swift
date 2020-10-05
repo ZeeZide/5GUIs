@@ -17,7 +17,7 @@ final class WindowState: ObservableObject {
   }
   
   @Published var state          = State.empty
-  @Published var detectionState : FileDetectionState?
+  @Published var detectionState : BundleFeatureDetectionOperation?
   var fakeDetectionStepper = FakeDetectionStepper()
   
   var url : URL? {
@@ -36,7 +36,7 @@ final class WindowState: ObservableObject {
     fakeDetectionStepper.suspend()
     
     self.state = .loading(url)
-    let detectionState = FileDetectionState(url)
+    let detectionState = BundleFeatureDetectionOperation(url)
     self.detectionState = detectionState
     
     detectionState.delegate = self
@@ -44,9 +44,9 @@ final class WindowState: ObservableObject {
   }
 }
 
-extension WindowState: FileDetectionStateDelegate {
+extension WindowState: BundleFeatureDetectionOperationDelegate {
   
-  func detectionStateDidChange(_ state: FileDetectionState) {
+  func detectionStateDidChange(_ state: BundleFeatureDetectionOperation) {
     guard detectionState === state else { return }
     
     switch state.state {
@@ -59,7 +59,7 @@ extension WindowState: FileDetectionStateDelegate {
       
       case .finished:
         self.state = .app(state.info)
-        fakeDetectionStepper.resume(with: state.analysisResults)
+        fakeDetectionStepper.resume(with: state.info.analysisResults)
         
         #if false // until done
         self.detectionState = nil
