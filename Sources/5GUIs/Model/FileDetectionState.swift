@@ -180,6 +180,10 @@ final class FileDetectionState: ObservableObject {
         break
       }
     }
+    // e.g. JD-GUI
+    if self.info.infoDictionary?.JavaX != nil {
+      detectedFeatures.insert(.java)
+    }
     
     do { // Electron apps seem to have this ...
       let suburl = contents.appendingPathComponent("Resources/app.asar")
