@@ -181,7 +181,7 @@ final class FileDetectionState: ObservableObject {
       }
     }
     // JD-GUI
-    if self.info.infoDictionary?.JavaX != nil {
+    if self.info.infoDictionary?.JavaX ?? false {
       detectedFeatures.insert(.java)
     }
     
