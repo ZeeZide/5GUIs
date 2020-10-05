@@ -18,8 +18,6 @@ struct ExecutableFileTechnologyInfo: Equatable {
   var appImage       : Image?
   var dependencies   = [ String ]()
   
-  // TODO: Also scan embedded apps and plugins and keep them as a nested
-  //       array in here.
   var embeddedExecutables  = [ ExecutableFileTechnologyInfo ]()
   
   var detectedTechnologies : DetectedTechnologies = []
