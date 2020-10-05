@@ -40,7 +40,8 @@ struct MainFileView: View {
             ScrollView {
               DetailsPopover(info: state.info)
             }
-            .frame(minWidth: 480, maxWidth: .infinity, minHeight: 320)
+            .frame(minWidth: 480, maxWidth: .infinity,
+                   minHeight: 320, maxHeight: 840)
           }
           .padding(.top)
           .onTapGesture {
