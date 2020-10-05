@@ -26,12 +26,14 @@ struct DetailsPopover: View {
           .padding()
 
         VStack(alignment: .leading, spacing: 4) {
-          info.id                 .flatMap { Text("ID: \($0)") }
-          info.name               .flatMap { Text("Name: \($0)") }
-          info.info               .flatMap { Text("Info: \($0)") }
-          info.version            .flatMap { Text("Version: \($0)") }
-          info.shortVersion       .flatMap { Text("Short Version: \($0)") }
-          info.applicationCategory.flatMap { Text("App Category: \($0)") }
+          PropertiesView(properties: [
+            ( "Bundle ID", info.id ),
+            ( "Name", info.name ),
+            ( "Info", info.info ),
+            ( "Version", info.version ),
+            ( "Short Version", info.shortVersion ),
+            ( "Application Category", info.applicationCategory ),
+          ])
           if info.appleScriptEnabled {
             Text("Fancy, AppleScript is enabled!")
           }
@@ -81,9 +83,8 @@ struct DetailsPopover: View {
         else {
           Text("No Bundle Info?")
         }
-        
         if let url = info.executableURL {
-          Text("Executable: \(url.path)")
+          PropertyLine(name: "Executable", value: url.path)
         }
         
         if hasReceipt {
@@ -97,5 +98,31 @@ struct DetailsPopover: View {
       DependenciesView(dependencies: info.dependencies)
         .padding()
     }
+  }
+}
+
+struct DetailsPopover_Previews: PreviewProvider {
+  static var previews: some View {
+    DetailsPopover(info:
+      ExecutableFileTechnologyInfo(
+        fileURL: URL(fileURLWithPath: "/Applications/Xcode.app"),
+        infoDictionary: InfoDict([
+          "CFBundleIdentifier" : "blub.blab.blum",
+          "CFBundleName"       : "VisualStudio"
+        ]),
+        executableURL: URL(fileURLWithPath:
+                       "/Applications/Xcode.app/Contents/MacOS/VisualStudio"),
+        receiptURL: nil,
+        appImage: nil,
+        dependencies: [
+          "@rpath/DVTCocoaAdditionsKit.framework/Versions/A/DVTCocoaAdditionsKit",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+          "/usr/lib/swift/libswiftXPC.dylib"
+        ],
+        embeddedExecutables: [],
+        detectedTechnologies: [ .appkit, .swift ]
+      )
+    )
   }
 }

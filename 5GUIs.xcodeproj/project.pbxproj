@@ -11,6 +11,7 @@
 		E83E32C225220277009BE980 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E83E32C125220277009BE980 /* Preview Assets.xcassets */; };
 		E83E32C525220277009BE980 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E83E32C325220277009BE980 /* Main.storyboard */; };
 		E88C60C6252B482B008B3272 /* DetectedTechnologies.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C60C5252B482B008B3272 /* DetectedTechnologies.swift */; };
+		E8E01B6F252B6A8A005B7CCF /* PropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E01B6E252B6A8A005B7CCF /* PropertiesView.swift */; };
 		E8F1C3F72524EAFB000B517B /* LLVM-LICENSE.TXT in Resources */ = {isa = PBXBuildFile; fileRef = E8F1C3F62524EAFB000B517B /* LLVM-LICENSE.TXT */; };
 		E8F1C41C25260051000B517B /* OTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C40225260051000B517B /* OTool.swift */; };
 		E8F1C41D25260051000B517B /* WindowEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C40325260051000B517B /* WindowEnvironmentKey.swift */; };
@@ -46,6 +47,7 @@
 		E83E32C625220277009BE980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E83E32C725220277009BE980 /* _GUIs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = _GUIs.entitlements; sourceTree = "<group>"; };
 		E88C60C5252B482B008B3272 /* DetectedTechnologies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedTechnologies.swift; sourceTree = "<group>"; };
+		E8E01B6E252B6A8A005B7CCF /* PropertiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesView.swift; sourceTree = "<group>"; };
 		E8E5B7572526299400FF9B14 /* llvm-objdump.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llvm-objdump.entitlements"; sourceTree = "<group>"; };
 		E8F1C3D82524BA3F000B517B /* llvm-objdump */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llvm-objdump"; sourceTree = "<group>"; };
 		E8F1C3F62524EAFB000B517B /* LLVM-LICENSE.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LLVM-LICENSE.TXT"; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				E8F1C40925260051000B517B /* SpinnerView.swift */,
+				E8E01B6E252B6A8A005B7CCF /* PropertiesView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				E8F1C42625260051000B517B /* ThirdPartyLicensesView.swift in Sources */,
 				E8F1C42D25260051000B517B /* FakeDetectionStepper.swift in Sources */,
 				E8F1C42425260051000B517B /* DetectionStepsView.swift in Sources */,
+				E8E01B6F252B6A8A005B7CCF /* PropertiesView.swift in Sources */,
 				E8F1C42A25260051000B517B /* MainFileView.swift in Sources */,
 				E8F1C42225260051000B517B /* SpinnerView.swift in Sources */,
 				E8F1C42325260051000B517B /* PleaseDropAFileView.swift in Sources */,
