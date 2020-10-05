@@ -24,6 +24,7 @@ struct InfoDict: Equatable {
   let appleScriptEnabled   : Bool
   
   let isAutomatorApplet    : Bool
+  let requiresCarbon       : Bool
   
   /**
    * E.g. JD-GUI.
@@ -74,6 +75,7 @@ struct InfoDict: Equatable {
 
     appleScriptEnabled   = B("NSAppleScriptEnabled")
     isAutomatorApplet    = B("AMIsApplet")
+    requiresCarbon       = B("LSRequiresCarbon")
     
     supportedPlatforms = dictionary["CFBundleSupportedPlatforms"] as? [ String ]
                       ?? []

@@ -153,7 +153,7 @@ final class FileDetectionState: ObservableObject {
       let dependencies = try otool(executableURL)
       
       // scan in this bg thread
-      var detectedFeatures = ExecutableFileTechnologyInfo.DetectedTechnologies()
+      var detectedFeatures = DetectedTechnologies()
       detectedFeatures.scanDependencies(dependencies)
       
       apply {
@@ -169,7 +169,7 @@ final class FileDetectionState: ObservableObject {
   }
   
   private func processDirectoryContents(_ url: URL) { // Q: Any
-    var detectedFeatures = ExecutableFileTechnologyInfo.DetectedTechnologies()
+    var detectedFeatures = DetectedTechnologies()
     let contents = url.appendingPathComponent("Contents")
     
     // Charles & Eclipse
@@ -225,8 +225,8 @@ final class FileDetectionState: ObservableObject {
   
   // Our "5 GUIs"
   var analysisResults : [ FakeStep ] {
-    func make(_ feature : ExecutableFileTechnologyInfo.DetectedTechnologies,
-              _ config  : FakeStepConfig) -> FakeStep
+    func make(_ feature : DetectedTechnologies, _ config  : FakeStepConfig)
+         -> FakeStep
     {
       .init(config: config, state: info.detectedTechnologies.contains(feature))
     }

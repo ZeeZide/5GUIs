@@ -10,6 +10,7 @@
 		E83E32BF25220277009BE980 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E83E32BE25220277009BE980 /* Assets.xcassets */; };
 		E83E32C225220277009BE980 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E83E32C125220277009BE980 /* Preview Assets.xcassets */; };
 		E83E32C525220277009BE980 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E83E32C325220277009BE980 /* Main.storyboard */; };
+		E88C60C6252B482B008B3272 /* DetectedTechnologies.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C60C5252B482B008B3272 /* DetectedTechnologies.swift */; };
 		E8F1C3F72524EAFB000B517B /* LLVM-LICENSE.TXT in Resources */ = {isa = PBXBuildFile; fileRef = E8F1C3F62524EAFB000B517B /* LLVM-LICENSE.TXT */; };
 		E8F1C41C25260051000B517B /* OTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C40225260051000B517B /* OTool.swift */; };
 		E8F1C41D25260051000B517B /* WindowEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F1C40325260051000B517B /* WindowEnvironmentKey.swift */; };
@@ -44,6 +45,7 @@
 		E83E32C425220277009BE980 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E83E32C625220277009BE980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E83E32C725220277009BE980 /* _GUIs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = _GUIs.entitlements; sourceTree = "<group>"; };
+		E88C60C5252B482B008B3272 /* DetectedTechnologies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedTechnologies.swift; sourceTree = "<group>"; };
 		E8E5B7572526299400FF9B14 /* llvm-objdump.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llvm-objdump.entitlements"; sourceTree = "<group>"; };
 		E8F1C3D82524BA3F000B517B /* llvm-objdump */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llvm-objdump"; sourceTree = "<group>"; };
 		E8F1C3F62524EAFB000B517B /* LLVM-LICENSE.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LLVM-LICENSE.TXT"; sourceTree = "<group>"; };
@@ -169,12 +171,13 @@
 		E8F1C41225260051000B517B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E8F1C41325260051000B517B /* FileDetectionState.swift */,
+				E88C60C5252B482B008B3272 /* DetectedTechnologies.swift */,
+				E8F1C41825260051000B517B /* ExecutableFileTechnologyInfo.swift */,
 				E8F1C41425260051000B517B /* InfoDict.swift */,
+				E8F1C41325260051000B517B /* FileDetectionState.swift */,
 				E8F1C41525260051000B517B /* FakeDetectionStepper.swift */,
 				E8F1C41625260051000B517B /* FakeStepConfigs.swift */,
 				E8F1C41725260051000B517B /* LoadBundleImage.swift */,
-				E8F1C41825260051000B517B /* ExecutableFileTechnologyInfo.swift */,
 			);
 			name = Model;
 			path = Sources/5GUIs/Model;
@@ -329,6 +332,7 @@
 				E8F1C41F25260051000B517B /* ProcessHelper.swift in Sources */,
 				E8F1C42925260051000B517B /* ContentView.swift in Sources */,
 				E8F1C43025260051000B517B /* ExecutableFileTechnologyInfo.swift in Sources */,
+				E88C60C6252B482B008B3272 /* DetectedTechnologies.swift in Sources */,
 				E8F1C42C25260051000B517B /* InfoDict.swift in Sources */,
 				E8F1C43325260051000B517B /* Style.swift in Sources */,
 				E8F1C42F25260051000B517B /* LoadBundleImage.swift in Sources */,

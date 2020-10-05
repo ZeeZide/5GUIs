@@ -80,9 +80,7 @@ fileprivate struct Texts {
 
 fileprivate extension ExecutableFileTechnologyInfo {
   
-  func features(_ feature: ExecutableFileTechnologyInfo.DetectedTechnologies)
-       -> Bool
-  {
+  func features(_ feature: DetectedTechnologies) -> Bool {
     detectedTechnologies.contains(feature)
   }
   
