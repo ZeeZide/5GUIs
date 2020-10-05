@@ -78,7 +78,11 @@ fileprivate struct Texts {
     "We've finally found someone using that great technology!"
   
   static let applescriptApp =
-    "tell application '#APPNAME#' it is an AppleScript application"
+    "tell application '#APPNAME#' it is an AppleScript application!"
+  
+  // What? No platypus Emoji? Neither a beaver?
+  static let platypusApp =
+    "#!/usr/local/bin/platypus: Looks like a script packaged in Down Under! 🥚"
 }
 
 import Foundation
@@ -138,6 +142,10 @@ fileprivate extension ExecutableFileTechnologyInfo {
     
     if features(.applescript) && infoDictionary?.executable == "applet" {
       return Texts.applescriptApp
+    }
+    
+    if features(.platypus) && !features(.swift) {
+      return Texts.platypusApp
     }
     
     if features(.appkit) {

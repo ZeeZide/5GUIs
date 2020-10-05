@@ -198,8 +198,10 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     }
     
     // JD-GUI
-    if info.infoDictionary?.JavaX ?? false {
-      detectedFeatures.insert(.java)
+    do {
+      if info.infoDictionary?.JavaX ?? false {
+        detectedFeatures.insert(.java)
+      }
     }
     
     do { // Electron apps seem to have this ...
@@ -221,8 +223,20 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         detectedFeatures.insert(.applescript)
       }
     }
-    catch {} // not ehre
+    catch {} // not here
     
+    // scan for Platypus
+    do {
+      let suburl1 =
+            contents.appendingPathComponent("Resources/AppSettings.plist")
+      let suburl2 = contents.appendingPathComponent("Resources/script")
+      if fm.fileExists(atPath: suburl1.path) &&
+         fm.fileExists(atPath: suburl2.path)
+      {
+        detectedFeatures.insert(.platypus)
+      }
+    }
+
     // scan the Frameworks directory
     do {
       let suburl = contents.appendingPathComponent("Frameworks")
@@ -269,7 +283,8 @@ extension DetectedTechnologies {
       if check(.swiftui,   "SwiftUI.framework") { continue }
       if check(.uikit,     "UIKit.framework")   { continue }
       if check(.qt,        "QtCore.framework")  { continue }
-      
+      if check(.webkit,    "WebKit.framework")  { continue }
+
       if check(.cplusplus, "libc++")            { continue }
       if check(.objc,      "libobjc")           { continue }
       if check(.swift,     "libswiftCore")      { continue }
