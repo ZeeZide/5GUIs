@@ -59,7 +59,7 @@ extension WindowState: BundleFeatureDetectionOperationDelegate {
       
       case .finished:
         self.state = .app(state.info)
-        fakeDetectionStepper.resume(with: state.analysisResults)
+        fakeDetectionStepper.resume(with: state.info.analysisResults)
         
         #if false // until done
         self.detectionState = nil

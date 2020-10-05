@@ -115,6 +115,15 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     applyState(.finished)
   }
   
+  /**
+   * Processes an app bundle (on a background queue).
+   *
+   * Steps
+   * 1. load and parse info dictionary
+   * 2. load image
+   * 3. run otool on the main executable and its dependencies
+   * 4. look for files in the bundle hierarchy
+   */
   private func processWrapper(_ url: URL) { // Q: Any
     guard let bundle = Bundle(url: url) else {
       print("could not open bundle:", url)
@@ -141,13 +150,19 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     processExecutable(executableURL)
     
     processDirectoryContents(url)
+    
+    
+    // TODO: look for nested binaries (additional apps).
+    
 
+    // DONE
     self.applyState(.finished)
   }
   
   
   // MARK: - Individual Workers
   
+  /// This runs objdump on the executable (w/ traversal of dependencies)
   private func processExecutable(_ executableURL: URL) { // Q: Any
     do {
       let dependencies = try otool(executableURL)
@@ -168,6 +183,7 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     }
   }
   
+  /// Looks at the directory hierarchy of the bundle
   private func processDirectoryContents(_ url: URL) { // Q: Any
     var detectedFeatures = DetectedTechnologies()
     let contents = url.appendingPathComponent("Contents")
@@ -180,6 +196,7 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         break
       }
     }
+    
     // JD-GUI
     if self.info.infoDictionary?.JavaX ?? false {
       detectedFeatures.insert(.java)
@@ -191,7 +208,7 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         detectedFeatures.insert(.electron)
       }
     }
-
+    
     // scan the Frameworks directory
     do {
       let suburl = contents.appendingPathComponent("Frameworks")
@@ -219,30 +236,6 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         self.info.detectedTechnologies.formUnion(detectedFeatures)
       }
     }
-  }
-  
-  // MARK: - Results
-  
-  // Our "5 GUIs"
-  var analysisResults : [ FakeStep ] {
-    func make(_ feature : DetectedTechnologies, _ config  : FakeStepConfig)
-         -> FakeStep
-    {
-      .init(config: config, state: info.detectedTechnologies.contains(feature))
-    }
-    
-    // This doesn't work on macOS BS:
-    // https://github.com/ZeeZide/5GUIs/issues/3
-    let isPhone = info.detectedTechnologies.contains(.uikit)
-             && !(info.detectedTechnologies.contains(.catalyst))
-    
-    return [
-      make(.electron, .electron),
-      make(.catalyst, .catalyst),
-      make(.swiftui,  .swiftUI),
-      .init(config: .phone, state: isPhone),
-      make(.appkit, .appKit) // TBD: only report if others don't match?
-    ]
   }
 }
 
