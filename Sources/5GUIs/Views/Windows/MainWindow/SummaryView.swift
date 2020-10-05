@@ -74,17 +74,26 @@ fileprivate struct Texts {
     "wxWidgets. Is it Python, Perl or Ruby? Maybe straight C++? 🙈"
   
   static let automatorApp =
-    "An Automator.app. " +
+    "An 🤖 Automator.app. " +
     "We've finally found someone using that great technology!"
+  
+  static let applescriptApp =
+    "tell application '#APPNAME#' it is an AppleScript application"
 }
+
+import Foundation
 
 fileprivate extension ExecutableFileTechnologyInfo {
   
   func features(_ feature: DetectedTechnologies) -> Bool {
     detectedTechnologies.contains(feature)
   }
-  
+
   var summaryText : String {
+    summaryTextTemplate.replacingOccurrences(of: "#APPNAME#", with: appName)
+  }
+
+  private var summaryTextTemplate : String {
     if detectedTechnologies.isEmpty { return Texts.none }
     
     if features(.electron) {
@@ -125,6 +134,10 @@ fileprivate extension ExecutableFileTechnologyInfo {
     
     if features(.python) {
       return Texts.python
+    }
+    
+    if features(.applescript) && infoDictionary?.executable == "applet" {
+      return Texts.applescriptApp
     }
     
     if features(.appkit) {

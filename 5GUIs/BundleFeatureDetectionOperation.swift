@@ -198,7 +198,7 @@ final class BundleFeatureDetectionOperation: ObservableObject {
     }
     
     // JD-GUI
-    if self.info.infoDictionary?.JavaX ?? false {
+    if info.infoDictionary?.JavaX ?? false {
       detectedFeatures.insert(.java)
     }
     
@@ -208,6 +208,20 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         detectedFeatures.insert(.electron)
       }
     }
+    
+    // Check for AppleScript applications
+    do {
+      let suburl = contents.appendingPathComponent("Resources/Scripts")
+      let hasScript =
+        try fm.contentsOfDirectory(at: suburl,
+                                   includingPropertiesForKeys: nil,
+                                   options: .skipsSubdirectoryDescendants)
+          .contains { $0.pathExtension == "scpt" }
+      if hasScript {
+        detectedFeatures.insert(.applescript)
+      }
+    }
+    catch {} // not ehre
     
     // scan the Frameworks directory
     do {
@@ -227,9 +241,7 @@ final class BundleFeatureDetectionOperation: ObservableObject {
         }
       }
     }
-    catch {
-      print("ERROR: ignoring framework scan error:", error)
-    }
+    catch {} // doesn't have to exist
     
     if !detectedFeatures.isEmpty {
       apply {
