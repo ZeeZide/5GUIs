@@ -66,7 +66,7 @@
 		E8F1C40F25260051000B517B /* DetailsPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPopover.swift; sourceTree = "<group>"; };
 		E8F1C41025260051000B517B /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E8F1C41125260051000B517B /* MainFileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFileView.swift; sourceTree = "<group>"; };
-		E8F1C41325260051000B517B /* BundleFeatureDetectionOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleFeatureDetectionOperation.swift; sourceTree = "<group>"; };
+		E8F1C41325260051000B517B /* BundleFeatureDetectionOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BundleFeatureDetectionOperation.swift; path = ../Sources/5GUIs/BundleFeatureDetectionOperation.swift; sourceTree = "<group>"; };
 		E8F1C41425260051000B517B /* InfoDict.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoDict.swift; sourceTree = "<group>"; };
 		E8F1C41525260051000B517B /* FakeDetectionStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeDetectionStepper.swift; sourceTree = "<group>"; };
 		E8F1C41625260051000B517B /* FakeStepConfigs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeStepConfigs.swift; sourceTree = "<group>"; };
